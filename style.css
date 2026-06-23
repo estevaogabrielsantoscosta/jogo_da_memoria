@@ -1,0 +1,293 @@
+body {
+    background: linear-gradient(135deg, #0c0c1d 0%, #1a1a3e 50%, #0c0c1d 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+}
+
+.game-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.game-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* Cartas */
+.memory-card {
+    aspect-ratio: 1;
+    background: linear-gradient(145deg, #2a2a5e, #1a1a3e);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(2rem, 5vw, 4rem);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    transform-style: preserve-3d;
+    min-height: 80px;
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    animation: cardAppear 0.3s ease forwards;
+}
+
+.memory-card .card-icon {
+    font-size: inherit;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+.memory-card .card-question {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.memory-card:hover:not(.flipped):not(.matched) {
+    transform: scale(1.05) translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.memory-card.flipped {
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    transform: rotateY(180deg) scale(1.02);
+    border-color: #667eea;
+}
+
+.memory-card.matched {
+    background: linear-gradient(145deg, #50db91, #3cb371);
+    transform: scale(0.95);
+    cursor: default;
+    opacity: 0.85;
+    border-color: #50db91;
+    box-shadow: 0 0 30px rgba(80, 219, 145, 0.3);
+}
+
+.memory-card.matched .card-icon {
+    animation: matchPop 0.4s ease;
+}
+
+.memory-card.disabled {
+    pointer-events: none;
+}
+
+/* Animações */
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8) rotateY(90deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotateY(0deg);
+    }
+}
+
+@keyframes matchPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(0.92); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+}
+
+.match-animation {
+    animation: pulse 0.4s ease-in-out 2;
+}
+
+/* Estatísticas */
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    display: block;
+    margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+}
+
+.game-card .fs-3 {
+    font-size: 1.8rem !important;
+}
+
+/* Botões */
+.btn-group .btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border-radius: 12px !important;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.btn-group .btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.btn-group .btn-outline-primary {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.btn-group .btn-outline-primary:hover {
+    background: #667eea;
+    color: #fff;
+}
+
+.btn-group .btn-outline-success {
+    border-color: #50db91;
+    color: #50db91;
+}
+
+.btn-group .btn-outline-success:hover {
+    background: #50db91;
+    color: #fff;
+}
+
+/* Toggle de som */
+.form-switch .form-check-input {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    width: 2.5em;
+    height: 1.5em;
+}
+
+.form-switch .form-check-input:checked {
+    background-color: #667eea;
+    border-color: #667eea;
+}
+
+.form-switch .form-check-label {
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Modal de vitória */
+.modal-content {
+    background: linear-gradient(145deg, #1a1a3e, #2a2a5e);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    color: #fff;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px 24px 0 0 !important;
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 24px 24px !important;
+}
+
+.modal-header .btn-close {
+    filter: invert(1);
+}
+
+.victory-stats {
+    padding: 10px 0;
+}
+
+.victory-stats .stars-display {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    letter-spacing: 5px;
+}
+
+.victory-stats p {
+    margin: 8px 0;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.victory-stats p i {
+    margin-right: 10px;
+    color: #667eea;
+}
+
+/* Responsividade */
+@media (max-width: 576px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .game-card {
+        padding: 12px;
+    }
+    
+    .memory-card {
+        min-height: 60px;
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        border-radius: 12px;
+    }
+    
+    .btn-group .btn {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+    
+    .stat-value {
+        font-size: 1.2rem;
+    }
+    
+    .display-5 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .memory-card {
+        min-height: 50px;
+        font-size: 1.2rem;
+        border-radius: 10px;
+    }
+    
+    .btn-group .btn {
+        font-size: 0.65rem;
+        padding: 4px 8px;
+    }
+}
+
+/* Scrollbar customizada */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(102, 126, 234, 0.8);
+}
